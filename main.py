@@ -1,3 +1,4 @@
+import os
 from binance import get_data_candle
 from sqlite import insert_candles, init_db, get_connection, retrieve_candles
 
