@@ -85,3 +85,32 @@ Data can be retrieved from the database using the `retrieve_candles` function.
 The first step is to retrieve all SPOT markets that accept LIMIT orders from the Binance API. The next thing is to search trhough all possible market trio (BTC/USDT, ETH/USDT, ETH/BTC for example) and find the best arbitrage opportunity. A limit is set to the number of trio. It is not optimized as it takes the first market trio it finds. Nontheless, it works.
 
 Then the goal is to use the price of these markets based on order books to calculate the potential profits. No order will be placed in this file. So the TEST_ENV variable must be set to 1.
+
+### Example of arbitrage
+
+I tested the algorithm with small markets to find the biggest possible arbitrages.
+
+```bash
+{'symbol': 'LRCETH', 'baseAsset': 'LRC', 'quoteAsset': 'ETH'} -> {'symbol': 'ETHBTC', 'baseAsset': 'ETH', 'quoteAsset': 'BTC'} -> {'symbol': 'LRCBTC', 'baseAsset': 'LRC', 'quoteAsset': 'BTC'}
+Profit : 0.15349440527632208%
+
+=========================================================
+
+{'symbol': 'QTUMETH', 'baseAsset': 'QTUM', 'quoteAsset': 'ETH'} -> {'symbol': 'ETHBTC', 'baseAsset': 'ETH', 'quoteAsset': 'BTC'} -> {'symbol': 'QTUMBTC', 'baseAsset': 'QTUM', 'quoteAsset': 'BTC'}
+Profit : 0.20405837946653183%
+
+=========================================================
+
+{'symbol': 'OMGETH', 'baseAsset': 'OMG', 'quoteAsset': 'ETH'} -> {'symbol': 'ETHBTC', 'baseAsset': 'ETH', 'quoteAsset': 'BTC'} -> {'symbol': 'OMGBTC', 'baseAsset': 'OMG', 'quoteAsset': 'BTC'}
+Profit : 0.2236410635154895%
+
+=========================================================
+
+{'symbol': 'ZRXETH', 'baseAsset': 'ZRX', 'quoteAsset': 'ETH'} -> {'symbol': 'ETHBTC', 'baseAsset': 'ETH', 'quoteAsset': 'BTC'} -> {'symbol': 'ZRXBTC', 'baseAsset': 'ZRX', 'quoteAsset': 'BTC'}
+Profit : 0.22939563106796346%
+
+=========================================================
+
+{'symbol': 'KNCETH', 'baseAsset': 'KNC', 'quoteAsset': 'ETH'} -> {'symbol': 'ETHBTC', 'baseAsset': 'ETH', 'quoteAsset': 'BTC'} -> {'symbol': 'KNCBTC', 'baseAsset': 'KNC', 'quoteAsset': 'BTC'}
+Profit : 0.14871227364186002%
+```
