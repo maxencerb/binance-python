@@ -20,13 +20,15 @@ pip install -r requirements.txt
 
 Then create a .env file with the following variables:
 
-```
+```env
 BINANCE_API_KEY=<your_api_key>
 BINANCE_SECRET_KEY=<your_secret_key>
 TEST_ENV=1
 ```
 
 The test env variable is used for the `createOrder` function. If it is set to 1, the function will create an order on the test environment, otherwise it will create an order on the main environment.
+
+You can also export those variables in your shell environment.
 
 ## Calls to the Binance API
 
@@ -57,6 +59,7 @@ params = {
 
 # Get the signature from the payload
 # form of the payload : 'param=value&param=value&...'
+# This fomat for the payload can be obtained with `urlencode` function from the `urllib` library
 signature = hmac.new(secret_key.encode(), urlencode(params).encode(), hashlib.sha256).hexdigest()
 
 requests.post(url + endpoint, data={**params, 'signature': signature}, headers=get_headers(api_key))
@@ -70,3 +73,15 @@ def get_headers(api_key):
         'X-MBX-APIKEY': api_key
     }
 ```
+
+## Store Data
+
+The data is stored in a SQLite database. The schema is simple and can be found in the `sqlite.py` file.
+
+Data can be retrieved from the database using the `retrieve_candles` function.
+
+## Arbitrage bot
+
+The first step is to retrieve all SPOT markets that accept LIMIT orders from the Binance API. The next thing is to search trhough all possible market trio (BTC/USDT, ETH/USDT, ETH/BTC for example) and find the best arbitrage opportunity. A limit is set to the number of trio. It is not optimized as it takes the first market trio it finds. Nontheless, it works.
+
+Then the goal is to use the price of these markets based on order books to calculate the potential profits. No order will be placed in this file. So the TEST_ENV variable must be set to 1.
